@@ -36,10 +36,6 @@ public class LinkedListDemo {
       }
     }
 
-
-
-
-
     ListIterator<String> listIterator = list.listIterator();
     while (listIterator.hasNext()){
       String s = listIterator.next();

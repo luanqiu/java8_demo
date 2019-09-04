@@ -1,4 +1,11 @@
 package demo.four;
+import com.google.common.collect.ImmutableList;
+
+import	java.util.ArrayList;
+import java.util.List;
+import	java.util.concurrent.ArrayBlockingQueue;
+
+import org.junit.Test;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.DelayQueue;
@@ -97,6 +104,13 @@ public class DelayQueueDemo {
     log.info("10,{}",(10 - 1) >>> 1);
     log.info("15,{}",(15 - 1) >>> 1);
     log.info("200,{}",(200 - 1) >>> 1);
+  }
+
+  @Test
+  public void testInit(){
+    List<String> list = ImmutableList.of("a","b","c");
+    ArrayBlockingQueue q =
+    new ArrayBlockingQueue(1,true,list);
   }
 
 }

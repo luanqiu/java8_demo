@@ -8,6 +8,8 @@ import org.junit.Test;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.function.ObjDoubleConsumer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -107,6 +109,70 @@ public class HashMapDemo {
     log.info("左右边 map 都有 key，并且 value 相等：{}",difference.entriesInCommon());
     log.info("左右边 map 都有 key，但 value 不等：{}",difference.entriesDiffering());
   }
+
+  @Test
+  public void testHash(){
+    HashMap<Integer, Double> oldCountMap = new HashMap<>();
+    HashMap<Integer, Double> newCountMap = new HashMap<>();
+    for (int i = 0; i < 1000000; i++) {
+      // 随机得到 16 位字符串
+      String s = getRandomString(16);
+      // 就是简单的 hash
+      int oldIndex = (64-1) & s.hashCode();
+      // 使用 hashmap 的方法
+      int newIndex = (64-1) & (s.hashCode() ^ (s.hashCode() >>> 16));
+
+      double oldValue = oldCountMap.getOrDefault(oldIndex,0d);
+      oldCountMap.put(oldIndex, ++oldValue);
+
+      double newValue = newCountMap.getOrDefault(newIndex,0d);
+      newCountMap.put(newIndex, ++newValue);
+    }
+    HashMapDemo demo = new HashMapDemo();
+    Double[] oldArry = new Double[oldCountMap.values().size()];
+    oldCountMap.values().toArray(oldArry);
+
+    Double[] newArry = new Double[newCountMap.values().size()];
+    newCountMap.values().toArray(newArry);
+
+    System.out.println(demo.variance(oldArry));
+    System.out.println(demo.variance(newArry));
+  }
+
+  public  double variance(Double[] x) {
+    int m = x.length;
+    double sum = 0;
+    for (int i = 0; i < m; i++) {//求和
+      sum += x[i];
+    }
+    double dAve = sum / m;//求平均值
+    double dVar = 0;
+    for (int i = 0; i < m; i++) {//求方差
+      dVar += (x[i] - dAve) * (x[i] - dAve);
+    }
+    return dVar / m;
+  }
+
+  public static String getRandomString(int length){
+    String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    Random random=new Random();
+    StringBuffer sb=new StringBuffer();
+    for(int i=0;i<length;i++){
+      int number=random.nextInt(62);
+      sb.append(str.charAt(number));
+    }
+    return sb.toString();
+  }
+
+  private Integer getI(int i){
+    int sum =1;
+    for(int l=0;l<i;l++){
+      sum = sum * 2;
+    }
+    return sum;
+  }
+
+
 
 
 }

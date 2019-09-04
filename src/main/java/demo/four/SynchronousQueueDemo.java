@@ -1,6 +1,10 @@
 package demo.four;
 
+import org.junit.Test;
+
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +71,13 @@ public class SynchronousQueueDemo {
     Thread.sleep(5000L);
     log.info("sleepEnd");
     new Thread(p).start();
+  }
+
+  @Test
+  public void testRelQueue(){
+    ExecutorService executorService = Executors.newFixedThreadPool(10);
+    executorService.submit(() -> System.out.println(Thread.currentThread().getName() + " is run"));
+    
   }
 
 }

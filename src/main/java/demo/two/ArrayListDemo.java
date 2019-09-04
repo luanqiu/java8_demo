@@ -1,4 +1,6 @@
 package demo.two;
+import	java.util.concurrent.locks.ReentrantLock;
+import	java.lang.reflect.Field;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
@@ -179,6 +181,60 @@ public class ArrayListDemo {
     Executors.newFixedThreadPool(10).submit(futureTask);
     futureTask.get();
     System.out.println("cdcd");
+  }
+
+  @Test
+  public void string() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+    String str = "hello world";
+    Class clazz = Class.forName("java.lang.String");
+    Field field = clazz.getDeclaredField("value");
+    field.setAccessible(true);
+    // 拿到 string 里面的数组
+    char[] value = (char[]) field.get(str);
+    log.info("修改之前{}",str);
+    field.set(str,"hello java".toCharArray());
+    log.info("修改之后{}",str);
+
+
+  }
+
+  @Test
+  public void testFor(){
+    List<Integer> list = new ArrayList<Integer> (5000);
+    for (int i = 0; i < 5000; i++) {
+      list.add(i);
+    }
+  }
+
+  @Test
+  public void testParse(){
+    String s ="100";
+    long beginTime = System.currentTimeMillis();
+    for (int i = 0; i < 10000; i++) {
+      Long.parseLong(s);
+    }
+    log.info("parseLong 耗时 {}",System.currentTimeMillis() - beginTime);
+    long beginTime1 = System.currentTimeMillis();
+    for (int i = 0; i < 10000; i++) {
+      Long.valueOf(s);
+    }
+    log.info("valueOf 耗时 {}",System.currentTimeMillis() - beginTime1);
+
+    ReentrantLock lock = new ReentrantLock();
+    try{
+        lock.lock();
+        // do something
+    }catch(Exception e){
+      //throw Exception;
+    }finally {
+        lock.unlock();
+    }
+  }
+
+  @Test
+  public void ptestParseLock() {
+    ArrayList list = new ArrayList();
+    list.add("1");
   }
 
 }

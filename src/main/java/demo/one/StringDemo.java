@@ -73,6 +73,7 @@ public class StringDemo {
   public void testJoin(){
     String s ="hello";
     String s1 ="china";
+    s.replace("nihao","sss");
 
 //    log.info(s.join(",",s1).join(",","null"));
 
@@ -93,6 +94,30 @@ public class StringDemo {
   public void testLong128(){
     Long.valueOf(128);
     Long.valueOf(129);
+  }
+
+  @Test
+  public void testReplaceAndAll(){
+    StringBuffer strb = new StringBuffer();
+    int size =1000;
+    for (int i = 0; i < size; i++)
+      strb.append("o");
+    String s = strb.toString();
+    String s1 = strb.toString();
+    long begin = System.currentTimeMillis();
+    s.replace('o','l');
+    log.info("循环{}次， replace 耗时{}",size, (System.currentTimeMillis() - begin));
+    begin = System.currentTimeMillis();
+    s1.replaceAll("o","l");
+    log.info("循环{}次， replace 耗时{}",size, (System.currentTimeMillis() - begin));
+  }
+
+  @Test
+  public void testSplit2(){
+    String s ="   i   ";
+    char ch = '-';
+    String[] sArrt = s.split("i",1);
+    System.out.println(sArrt);
   }
 
 
