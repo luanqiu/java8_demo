@@ -74,7 +74,6 @@ public class StringDemo {
     String s ="hello";
     String s1 ="china";
     s.replace("nihao","sss");
-
 //    log.info(s.join(",",s1).join(",","null"));
 
 
@@ -118,6 +117,16 @@ public class StringDemo {
     char ch = '-';
     String[] sArrt = s.split("i",1);
     System.out.println(sArrt);
+  }
+
+  @Test
+  public void test(){
+    new String("123123").substring(1,3);
+    String a ="123";
+    String s ="123";
+    System.out.println(a==s);
+    System.out.println(a==s);
+    System.out.println("123"=="123");
   }
 
 

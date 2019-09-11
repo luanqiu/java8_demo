@@ -6,6 +6,7 @@ import com.google.common.collect.MapDifference;
 import com.google.common.collect.Maps;
 import org.junit.Test;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -101,6 +102,7 @@ public class HashMapDemo {
 
   @Test
   public void testDifference(){
+    new HashMap<>(5);
     Map<String,String> leftMap = ImmutableMap.of("1","1","2","2","3","3");
     Map<String,String> rightMap = ImmutableMap.of("2","2","3","30","4","4");
     MapDifference difference = Maps.difference(leftMap, rightMap);
@@ -118,9 +120,9 @@ public class HashMapDemo {
       // 随机得到 16 位字符串
       String s = getRandomString(16);
       // 就是简单的 hash
-      int oldIndex = (64-1) & s.hashCode();
+      int oldIndex = (getTableLenth(oldCountMap)-1) & s.hashCode();
       // 使用 hashmap 的方法
-      int newIndex = (64-1) & (s.hashCode() ^ (s.hashCode() >>> 16));
+      int newIndex = (newCountMap.size()-1) & (s.hashCode() ^ (s.hashCode() >>> 16));
 
       double oldValue = oldCountMap.getOrDefault(oldIndex,0d);
       oldCountMap.put(oldIndex, ++oldValue);
@@ -137,6 +139,19 @@ public class HashMapDemo {
 
     System.out.println(demo.variance(oldArry));
     System.out.println(demo.variance(newArry));
+  }
+
+  private int getTableLenth(HashMap map){
+    try{
+      Class clazz = Class.forName("java.util.HashMap");
+      Field field = clazz.getDeclaredField("table");
+      field.setAccessible(true);
+      // 拿到 string 里面的数组
+      Object table = field.get(map);
+      return 0;
+    }catch(Exception e){
+    }
+    return 0;
   }
 
   public  double variance(Double[] x) {

@@ -13,7 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 *author  wenhe
 */
 @Slf4j
-public class LinkedListDemo {
+public class LinkedListDemo extends LinkedList<String>{
+
+  @Override
+  public String get(int index) {
+    return super.get(index);
+  }
 
   @Test
   public void testItertor(){
