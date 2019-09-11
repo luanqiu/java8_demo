@@ -58,7 +58,7 @@ public class ArrayListDemo {
       list.add(i);
     }
 
-    // 单个删除
+    // for 循环 使用add方法新增
     ArrayList<Integer> list2 = new ArrayList<>();
     long start1 = System.currentTimeMillis();
     for(int i=0;i<list.size();i++){
@@ -66,7 +66,7 @@ public class ArrayListDemo {
     }
     log.info("单个 for 循环新增 1 w 个，耗时{}",System.currentTimeMillis()-start1);
 
-    // 批量删除
+    // 使用 addAll 方法批量新增
     ArrayList<Integer> list3 = new ArrayList<>();
     long start2 = System.currentTimeMillis();
     list3.addAll(list);
@@ -229,12 +229,6 @@ public class ArrayListDemo {
     }finally {
         lock.unlock();
     }
-  }
-
-  @Test
-  public void ptestParseLock() {
-    ArrayList list = new ArrayList();
-    list.add("1");
   }
 
 }
