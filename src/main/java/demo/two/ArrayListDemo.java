@@ -1,4 +1,5 @@
 package demo.two;
+import java.util.HashSet;
 import	java.util.concurrent.locks.ReentrantLock;
 import	java.lang.reflect.Field;
 
@@ -64,13 +65,13 @@ public class ArrayListDemo {
     for(int i=0;i<list.size();i++){
       list2.add(list.get(i));
     }
-    log.info("单个 for 循环新增 1 w 个，耗时{}",System.currentTimeMillis()-start1);
+    log.info("单个 for 循环新增 300 w 个，耗时{}",System.currentTimeMillis()-start1);
 
     // 使用 addAll 方法批量新增
     ArrayList<Integer> list3 = new ArrayList<>();
     long start2 = System.currentTimeMillis();
     list3.addAll(list);
-    log.info("批量新增 1 w 个，耗时{}",System.currentTimeMillis()-start2);
+    log.info("批量新增 300 w 个，耗时{}",System.currentTimeMillis()-start2);
   }
 
   @Test
@@ -207,28 +208,34 @@ public class ArrayListDemo {
   }
 
   @Test
-  public void testParse(){
+  public void testParse() throws InterruptedException {
+    log.info("----");
+    Thread.sleep(1000L);
     String s ="100";
-    long beginTime = System.currentTimeMillis();
-    for (int i = 0; i < 10000; i++) {
-      Long.parseLong(s);
-    }
-    log.info("parseLong 耗时 {}",System.currentTimeMillis() - beginTime);
-    long beginTime1 = System.currentTimeMillis();
-    for (int i = 0; i < 10000; i++) {
-      Long.valueOf(s);
-    }
-    log.info("valueOf 耗时 {}",System.currentTimeMillis() - beginTime1);
+    int valueOf = 0;
+    int parseLong = 0;
+    for(int y=0;y<100;y++){
+      long beginTime = System.currentTimeMillis();
+      for (int i = 0; i < 1000; i++) {
+        Long.valueOf(s);
+      }
+      Long s11 = System.currentTimeMillis() - beginTime;
+      long beginTime1 = System.currentTimeMillis();
+      for (int i = 0; i < 1000; i++) {
+        Long.parseLong(s);
+      }
+      Long s22 = System.currentTimeMillis() - beginTime1;
 
-    ReentrantLock lock = new ReentrantLock();
-    try{
-        lock.lock();
-        // do something
-    }catch(Exception e){
-      //throw Exception;
-    }finally {
-        lock.unlock();
+      if(s11>s22){
+        parseLong++;
+      }else {
+        valueOf++;
+      }
     }
+     System.out.println("valueOf 累计"+valueOf);
+     System.out.println("parseLong 累计"+parseLong);
+
   }
+
 
 }
