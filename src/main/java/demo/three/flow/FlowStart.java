@@ -52,7 +52,8 @@ public class FlowStart {
       throw new RuntimeException("找不到该流程对应的领域行为" + flowName);
     }
     for (DomainAbilityBean domainAbility : domainAbilitys) {
-      domainAbility.invoke(content);
+//      domainAbility.invoke(content);
+      ComponentExecutor.run(domainAbility,content);
     }
   }
 

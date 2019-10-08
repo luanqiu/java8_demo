@@ -97,6 +97,14 @@ public class ArraysDemo {
     Collections.max(list);
   }
 
+  @Test
+  public void testSearch(){
+    //0~10
+    System.out.println("(0 + 10-1) >>> 1:"+((0 + 10-1) >>> 1));
+    System.out.println("(0 + 11-1) >>> 1:"+((0 + 11-1) >>> 1));
+    System.out.println("(1 + 11-1) >>> 1:"+((1 + 11-1) >>> 1));
+    System.out.println("(1 + 10-1) >>> 1:"+((1 + 10-1) >>> 1));
+  }
 
 
 

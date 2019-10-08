@@ -1,19 +1,26 @@
 package demo.three.flow;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * FlowCenter
  * author  wenhe
  * date 2019/8/11
  */
+@Slf4j
 @Component
 public class FlowCenter {
 
@@ -29,7 +36,19 @@ public class FlowCenter {
    */
   @PostConstruct
   public void init() {
-      // 初始化 flowMap
+      // 初始化 flowMap mock
+    Map<StageEnum, List<DomainAbilityBean>> stageMap = flowMap.getOrDefault("flow1",Maps.newConcurrentMap());
+    for (StageEnum value : StageEnum.values()) {
+      List<DomainAbilityBean> domainAbilitys = stageMap.getOrDefault(value, Lists.newCopyOnWriteArrayList());
+      if(CollectionUtils.isEmpty(domainAbilitys)){
+        domainAbilitys.addAll(ImmutableList.of(
+            ApplicationContextHelper.getBean(BeanOne.class),
+            ApplicationContextHelper.getBean(BeanTwo.class)
+        ));
+        stageMap.put(value,domainAbilitys);
+      }
+    }
+    flowMap.put("flow1",stageMap);
+    log.info("init success,flowMap is {}", JSON.toJSONString(flowMap));
   }
-
 }

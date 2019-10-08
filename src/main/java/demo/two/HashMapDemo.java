@@ -7,9 +7,11 @@ import com.google.common.collect.Maps;
 import org.junit.Test;
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 import java.util.function.ObjDoubleConsumer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -187,7 +189,27 @@ public class HashMapDemo {
     return sum;
   }
 
+  @Test
+  public void init(){
+    Map<String,String> map = new HashMap<>(1);
+    for(int i=0;i<67;i++){
+      if(i ==0){
+        map.put(i+"",i+"");
+      }else if(i ==15){
+        map.put(i+"",i+"");
+      }else {
+        map.put(i+"",i+"");
+      }
+    }
+  }
 
+  @Test
+  public void test(){
+    HashMap<String,String> map = new HashMap<>();
+    map.put("key","value");
+    Set<Map.Entry<String,String>> set = map.entrySet();
+    Collection<String> values =  map.values();
+  }
 
 
 }

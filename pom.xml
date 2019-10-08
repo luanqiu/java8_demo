@@ -103,6 +103,19 @@
         </dependency>
         <!-- Spring框架 end-->
 
+        <!-- Spring boot 框架 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>1.5.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.4.15</version>
+            <scope>compile</scope>
+        </dependency>
+
 
     </dependencies>
 
