@@ -79,7 +79,10 @@ public class DIYQueue<T> implements Queue<T>{
     }
     try{
       // 尝试加锁
-      putLock.tryLock(300, TimeUnit.MILLISECONDS);
+      boolean lockSuccess = putLock.tryLock(300, TimeUnit.MILLISECONDS);
+      if(!lockSuccess){
+        return false;
+      }
       // 校验队列大小
       if(size.get() >= capacity){
         log.info("queue is full");
@@ -90,7 +93,7 @@ public class DIYQueue<T> implements Queue<T>{
       size.incrementAndGet();
       return true;
     } catch (InterruptedException e){
-      log.info("tryLock 500 timeOut", e);
+      log.info("put error", e);
       return false;
     } catch(Exception e){
       log.error("put error", e);
@@ -108,8 +111,10 @@ public class DIYQueue<T> implements Queue<T>{
     }
     try {
       // 拿数据我们设置的超时时间更短
-      takeLock.tryLock(200,TimeUnit.MILLISECONDS);
-
+      boolean lockSuccess = takeLock.tryLock(200,TimeUnit.MILLISECONDS);
+      if(!lockSuccess){
+        throw new RuntimeException("加锁失败");
+      }
       // 把头结点的下一个元素拿出来
       Node expectHead = head.next;
       // 把头结点的值拿出来
@@ -124,6 +129,8 @@ public class DIYQueue<T> implements Queue<T>{
       log.info(" tryLock 200 timeOut",e);
     } catch (Exception e) {
       log.info(" take error ",e);
+    } finally {
+      takeLock.unlock();
     }
     return null;
   }
