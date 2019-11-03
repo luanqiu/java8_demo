@@ -2,6 +2,7 @@ package demo.three;
 
 import org.junit.Test;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,12 @@ public class ConcurrentHashMapDemo {
     new Thread(() -> MAP_1.put(1, 1)).start();
     new Thread(() -> MAP_1.put(1, 1)).start();
     System.out.println("nihao");
+  }
 
+  @Test
+  public void test33(){
+    Map<String,String> map = new ConcurrentHashMap<>(10);
+    map.put("nihao","nihao");
   }
 
 }

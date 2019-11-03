@@ -3,8 +3,6 @@ package demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javax.annotation.Resource;
-
 import demo.three.flow.ApplicationContextHelper;
 import demo.three.flow.FlowContent;
 import demo.three.flow.FlowStart;
@@ -18,10 +16,12 @@ import demo.three.flow.FlowStart;
 @SpringBootApplication(scanBasePackages = {"demo"})
 public class DemoApplication {
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     SpringApplication.run(DemoApplication.class);
-    ApplicationContextHelper.getBean(FlowStart.class)
-        .start("flow1",new FlowContent());
+    for (int i = 0; i < 20; i++) {
+      ApplicationContextHelper.getBean(FlowStart.class)
+          .start("flow2", new FlowContent());
+    }
   }
 
 

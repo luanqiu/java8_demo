@@ -4,6 +4,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 用锁实现了队列的逻辑
+* 大家看看这个像那个队列的实现逻辑
+*author  wenhe
+*date 2019/11/1
+*/
 public class ConditionDemo {
 
   final Lock lock = new ReentrantLock();
@@ -14,12 +20,15 @@ public class ConditionDemo {
   int putptr, takeptr, count;
 
   public void put(Object x) throws InterruptedException {
-    lock.lock();
     try {
-      while (count == items.length)
+      lock.lock();
+      while (count == items.length) {
         notFull.await();
+      }
       items[putptr] = x;
-      if (++putptr == items.length) putptr = 0;
+      if (++putptr == items.length) {
+        putptr = 0;
+      }
       ++count;
       notEmpty.signal();
     } finally {
@@ -28,12 +37,15 @@ public class ConditionDemo {
   }
 
   public Object take() throws InterruptedException {
-    lock.lock();
     try {
-      while (count == 0)
+      lock.lock();
+      while (count == 0) {
         notEmpty.await();
+      }
       Object x = items[takeptr];
-      if (++takeptr == items.length) takeptr = 0;
+      if (++takeptr == items.length) {
+        takeptr = 0;
+      }
       --count;
       notFull.signal();
       return x;

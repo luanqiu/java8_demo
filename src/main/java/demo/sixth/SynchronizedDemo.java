@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 public class SynchronizedDemo {
 
   // 共享资源
-  private static final Map<String,String> sharedMap = Maps.newConcurrentMap();
+  private static final Map<String,String> SHARED_MAP = Maps.newConcurrentMap();
   // 有无加锁完成的标志位
   private static boolean loaded = false;
 
@@ -36,7 +36,7 @@ public class SynchronizedDemo {
         return;
       }
       log.info("SynchronizedDemo init begin");
-      // 从数据库中捞取数据，组装成 sharedMap 的数据格式
+      // 从数据库中捞取数据，组装成 SHARED_MAP 的数据格式
       loaded = true;
       log.info("SynchronizedDemo init end");
     }
@@ -46,8 +46,8 @@ public class SynchronizedDemo {
    * 刷新
    */
   public void refresh(){
-    sharedMap.clear();
-    sharedMap.putAll(new HashMap<>());
+    SHARED_MAP.clear();
+    SHARED_MAP.putAll(new HashMap<>());
   }
 
 }

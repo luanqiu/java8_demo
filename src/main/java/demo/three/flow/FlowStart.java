@@ -1,5 +1,6 @@
 package demo.three.flow;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import org.springframework.stereotype.Component;
@@ -7,11 +8,14 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 流程启动类
  * author  wenhe
  * date 2019/8/11
  */
+@Slf4j
 @Component
 public class FlowStart {
 
@@ -47,9 +51,9 @@ public class FlowStart {
     List<DomainAbilityBean>
         domainAbilitys =
         FlowCenter.flowMap.getOrDefault(flowName, Maps.newHashMap())
-            .get(stage);
+            .getOrDefault(stage, Lists.newArrayList());
     if (CollectionUtils.isEmpty(domainAbilitys)) {
-      throw new RuntimeException("找不到该流程对应的领域行为" + flowName);
+      //throw new RuntimeException("找不到该流程对应的领域行为" + flowName);
     }
     for (DomainAbilityBean domainAbility : domainAbilitys) {
 //      domainAbility.invoke(content);
