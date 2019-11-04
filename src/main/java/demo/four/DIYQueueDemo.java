@@ -65,7 +65,7 @@ public class DIYQueueDemo {
         }
         executor.submit(new Consumer());
     }
-    Thread.sleep(10000);
+    Thread.sleep(10000000);
   }
 
 

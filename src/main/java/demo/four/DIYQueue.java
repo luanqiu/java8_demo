@@ -123,6 +123,7 @@ public class DIYQueue<T> implements Queue<T>{
       head.item = null;
       // 重新设置头结点的值
       head = (DIYNode) expectHead;
+      size.decrementAndGet();
       // 返回头结点的值
       return result;
     } catch (InterruptedException e) {
